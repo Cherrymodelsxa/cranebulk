@@ -1,0 +1,11 @@
+# Les scripts et fichiers du paquet doivent rester en LF : un script shell
+# commite en CRLF depuis Windows est refuse par le runner Linux.
+*.sh        text eol=lf
+Makefile    text eol=lf
+control     text eol=lf
+*.yml       text eol=lf
+*.x         text eol=lf
+*.m         text eol=lf
+*.h         text eol=lf
+*.deb       binary
+*.png       binary

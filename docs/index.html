@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CraneBulk — dépôt Sileo</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #171a21;
+    --line: #262b36;
+    --text: #e7eaf0;
+    --muted: #98a2b3;
+    --accent: #4c8dff;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f7f9; --card: #ffffff; --line: #e2e5ea;
+      --text: #14171f; --muted: #5b6472; --accent: #2f6fe4;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 48px 20px; background: var(--bg); color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 660px; margin: 0 auto; }
+  h1 { font-size: 34px; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 32px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 22px; margin-bottom: 18px;
+  }
+  h2 { font-size: 17px; margin: 0 0 12px; letter-spacing: -0.01em; }
+  code, .url {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px;
+  }
+  .url {
+    display: block; background: var(--bg); border: 1px solid var(--line);
+    border-radius: 9px; padding: 12px 14px; margin: 12px 0; word-break: break-all;
+  }
+  .btn {
+    display: inline-block; background: var(--accent); color: #fff;
+    text-decoration: none; padding: 12px 20px; border-radius: 10px;
+    font-weight: 600; font-size: 15px;
+  }
+  ol, ul { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 7px; }
+  .warn {
+    border-left: 3px solid #e0a33e; padding-left: 14px;
+    color: var(--muted); font-size: 15px;
+  }
+  footer { color: var(--muted); font-size: 14px; text-align: center; margin-top: 32px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>CraneBulk</h1>
+  <p class="sub">Créer et supprimer des conteneurs Crane en masse, depuis le menu d'une icône.</p>
+
+  <div class="card">
+    <h2>Ajouter le dépôt</h2>
+    <span class="url" id="repo-url">https://cherrymodelsxa.github.io/cranebulk/</span>
+    <a class="btn" href="sileo://source/https://cherrymodelsxa.github.io/cranebulk/">Ajouter à Sileo</a>
+  </div>
+
+  <div class="card">
+    <h2>Ajout manuel</h2>
+    <ol>
+      <li>Ouvrir <strong>Sileo</strong> et aller dans l'onglet <strong>Sources</strong>.</li>
+      <li>Appuyer sur <strong>+</strong> en haut à droite.</li>
+      <li>Coller l'URL ci-dessus, puis valider.</li>
+      <li>Chercher <strong>CraneBulk</strong> et l'installer.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Ce que fait le tweak</h2>
+    <ul>
+      <li>Appui long sur une icône, puis <em>Créer conteneurs Crane</em> : choisir un préfixe et une quantité, jusqu'à 100 conteneurs créés d'un coup et numérotés automatiquement.</li>
+      <li><em>Effacer conteneurs Crane</em> : supprime tous les conteneurs de l'application en une fois. Le conteneur par défaut est toujours conservé.</li>
+      <li>La numérotation reprend après les conteneurs existants, sans créer de doublons.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Prérequis</h2>
+    <ul>
+      <li>iOS 15.0 ou plus, jailbreak rootless (Dopamine, Fugu15 Max) ou rootful.</li>
+      <li><strong>Crane</strong> en version complète, vendu par opa334 sur
+          <a href="https://havoc.app/package/crane">Havoc</a>.</li>
+    </ul>
+    <p class="warn">Crane Lite ne fonctionne pas : l'édition gratuite n'expose pas
+       l'API libCrane sur laquelle repose CraneBulk.</p>
+  </div>
+
+  <footer>
+    CraneBulk n'est pas affilié à Crane ni à son auteur.
+    <a href="https://github.com/Cherrymodelsxa/cranebulk">Code source</a>
+  </footer>
+</main>
+</body>
+</html>

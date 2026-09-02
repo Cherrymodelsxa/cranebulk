@@ -1,0 +1,11 @@
+# Artefacts de compilation Theos
+.theos/
+obj/
+packages/
+
+# Les .deb servis par le depot doivent au contraire etre versionnes :
+# c'est docs/debs/ que Sileo telecharge. Ne pas ajouter de regle *.deb ici.
+
+# Systeme
+.DS_Store
+Thumbs.db

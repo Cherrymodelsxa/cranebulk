@@ -1,0 +1,98 @@
+name: Build et publication du dépôt
+
+on:
+  push:
+    branches: [main]
+    # Sans cette exclusion, le commit qui met à jour docs/ redéclencherait
+    # le workflow en boucle.
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    # Épinglé sur 22.04 : la toolchain iOS ci-dessous est compilée pour cette
+    # version d'Ubuntu.
+    runs-on: ubuntu-22.04
+
+    env:
+      # Hors du workspace : cloner Theos dans le dépôt checkouté polluerait
+      # l'arbre de travail au moment du commit de l'index APT.
+      THEOS: /home/runner/theos
+      TOOLCHAIN_URL: https://github.com/kabiroberai/swift-toolchain-linux/releases/download/v2.3.0/swift-5.8-ubuntu22.04.tar.xz
+      SDK_NAME: iPhoneOS16.5.sdk
+
+    steps:
+      - name: Récupérer les sources
+        uses: actions/checkout@v4
+
+      - name: Installer les dépendances système
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential curl git perl rsync xz-utils zstd \
+            dpkg-dev bzip2 gzip fakeroot
+
+      - name: Installer Theos
+        run: |
+          git clone --recursive --depth 1 https://github.com/theos/theos.git "$THEOS"
+
+      - name: Mettre en cache la toolchain et le SDK
+        id: cache-toolchain
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.THEOS }}/toolchain
+            ${{ env.THEOS }}/sdks
+          key: theos-toolchain-v2.3.0-${{ env.SDK_NAME }}
+
+      - name: Installer la toolchain iOS
+        if: steps.cache-toolchain.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL "$TOOLCHAIN_URL" -o /tmp/toolchain.tar.xz
+          mkdir -p "$THEOS/toolchain/linux/iphone"
+          tar -xf /tmp/toolchain.tar.xz -C "$THEOS/toolchain/linux/iphone" --strip-components=1
+
+      - name: Installer le SDK iOS
+        if: steps.cache-toolchain.outputs.cache-hit != 'true'
+        run: |
+          # Checkout partiel : le dépôt theos/sdks contient toutes les versions,
+          # on ne récupère que celle ciblée par le Makefile.
+          git clone -n --depth 1 --filter=tree:0 https://github.com/theos/sdks.git /tmp/sdks
+          cd /tmp/sdks
+          git sparse-checkout set --no-cone "$SDK_NAME"
+          git checkout
+          mkdir -p "$THEOS/sdks"
+          cp -r "/tmp/sdks/$SDK_NAME" "$THEOS/sdks/"
+
+      - name: Compiler le paquet
+        run: make package FINALPACKAGE=1
+
+      - name: Publier le .deb en artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cranebulk-deb
+          path: packages/*.deb
+          if-no-files-found: error
+
+      - name: Régénérer l'index APT
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: ./scripts/build-repo.sh
+
+      - name: Committer le dépôt mis à jour
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          if git diff --staged --quiet; then
+            echo "Index inchangé, rien à committer."
+          else
+            git commit -m "CI: mise à jour du dépôt APT"
+            git push
+          fi

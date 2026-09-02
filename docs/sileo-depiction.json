@@ -1,0 +1,48 @@
+{
+  "minVersion": "0.1",
+  "class": "DepictionTabView",
+  "tintColor": "#4c8dff",
+  "tabs": [
+    {
+      "class": "DepictionStackView",
+      "tabname": "Détails",
+      "views": [
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "**CraneBulk** ajoute deux entrées au menu d'appui long des icônes : créer des conteneurs Crane en masse, et tous les supprimer d'un coup."
+        },
+        { "class": "DepictionSeparatorView" },
+        { "class": "DepictionSubheaderView", "title": "Fonctionnalités" },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "- Jusqu'à **100 conteneurs** créés en une opération, nommés automatiquement à partir d'un préfixe.\n- La numérotation reprend après les conteneurs existants, donc pas de doublons.\n- Suppression groupée qui **conserve toujours le conteneur par défaut**.\n- Progression affichée et opération interruptible à tout moment.\n- Interface en français et en anglais."
+        },
+        { "class": "DepictionSeparatorView" },
+        { "class": "DepictionSubheaderView", "title": "Prérequis" },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "iOS 15.0 ou plus, et **Crane en version complète**. Crane Lite n'expose pas l'API libCrane et ne peut pas fonctionner avec ce tweak."
+        },
+        { "class": "DepictionSeparatorView" },
+        {
+          "class": "DepictionTableButtonView",
+          "title": "Acheter Crane sur Havoc",
+          "action": "https://havoc.app/package/crane"
+        },
+        {
+          "class": "DepictionTableButtonView",
+          "title": "Code source",
+          "action": "https://github.com/Cherrymodelsxa/cranebulk"
+        },
+        { "class": "DepictionSeparatorView" },
+        {
+          "class": "DepictionLabelView",
+          "text": "CraneBulk n'est pas affilié à Crane ni à opa334.",
+          "textColor": "#999999",
+          "fontSize": 12,
+          "alignment": 1
+        }
+      ]
+    }
+  ]
+}
