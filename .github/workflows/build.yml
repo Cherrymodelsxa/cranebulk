@@ -49,14 +49,21 @@ jobs:
           path: |
             ${{ env.THEOS }}/toolchain
             ${{ env.THEOS }}/sdks
-          key: theos-toolchain-v2.3.0-${{ env.SDK_NAME }}
+          # Le suffixe de layout doit changer des que la disposition extraite
+          # change, sinon un cache ecrit avec l'ancienne arborescence est
+          # restaure tel quel et l'etape d'extraction est sautee.
+          key: theos-toolchain-v2.3.0-layout2-${{ env.SDK_NAME }}
 
       - name: Installer la toolchain iOS
         if: steps.cache-toolchain.outputs.cache-hit != 'true'
         run: |
           curl -sSL "$TOOLCHAIN_URL" -o /tmp/toolchain.tar.xz
-          mkdir -p "$THEOS/toolchain/linux/iphone"
-          tar -xf /tmp/toolchain.tar.xz -C "$THEOS/toolchain/linux/iphone" --strip-components=1
+          # L'archive contient deja linux/iphone/... a sa racine, soit la
+          # disposition attendue sous toolchain/. Pas de strip-components.
+          mkdir -p "$THEOS/toolchain"
+          tar -xf /tmp/toolchain.tar.xz -C "$THEOS/toolchain"
+          test -x "$THEOS/toolchain/linux/iphone/bin/clang" \
+            || { echo "clang introuvable apres extraction :"; find "$THEOS/toolchain" -maxdepth 3 -type d; exit 1; }
 
       - name: Installer le SDK iOS
         if: steps.cache-toolchain.outputs.cache-hit != 'true'
