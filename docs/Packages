@@ -1,0 +1,21 @@
+Package: com.blaxk.cranebulk
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Maintainer: Blaxk <323802181+Cherrymodelsxa@users.noreply.github.com>
+Installed-Size: 252
+Depends: firmware (>= 15.0), mobilesubstrate, com.opa334.crane
+Filename: debs/com.blaxk.cranebulk_1.0.0_iphoneos-arm64.deb
+Size: 27204
+MD5sum: 79376b6e6a8b26e73f7197bdc084c553
+SHA1: 4ccff2e821cb60ada90ee9895159930eb7aaae03
+SHA256: d30992f402e181f6bd3f7a5225ddd70cde4b8543b6492c0db98b16ce52158f32
+Section: Tweaks
+Homepage: https://github.com/Cherrymodelsxa/cranebulk
+Description: Cree et supprime les conteneurs Crane en masse depuis le menu long-press d'une icone. Choisis un prefixe et une quantite, CraneBulk cree les conteneurs numerotes automatiquement. La suppression groupee conserve toujours le conteneur par defaut.
+Tag: purpose::extension, role::enduser
+Author: Blaxk <323802181+Cherrymodelsxa@users.noreply.github.com>
+Depiction: https://cherrymodelsxa.github.io/cranebulk/depiction.html
+Icon: https://cherrymodelsxa.github.io/cranebulk/icon.png
+Name: CraneBulk
+Sileodepiction: https://cherrymodelsxa.github.io/cranebulk/sileo-depiction.json
+

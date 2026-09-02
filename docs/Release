@@ -1,0 +1,8 @@
+Origin: CraneBulk Repo
+Label: CraneBulk Repo
+Suite: stable
+Version: 1.0
+Codename: ios
+Architectures: iphoneos-arm64
+Components: main
+Description: CraneBulk - creation et suppression groupees de conteneurs Crane
